@@ -3,6 +3,7 @@ import { Button, Divider, Link } from "@nextui-org/react";
 import Questions from "@/components/Question";
 
 export default function HomePage() {
+
 	return (
 		<>
 			<div>
