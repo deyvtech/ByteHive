@@ -1,53 +1,89 @@
 'use client'
 
-import Link from "next/link";
 import { HiBookmark, HiTag, HiUserGroup, HiArrowLeftOnRectangle } from "react-icons/hi2";
 import { usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
-import logo from "@/assets/images/bytehive-logo.png";
+import logo from "@/assets/images/bytehive.svg";
 import Image from "next/image";
-import { Button } from "@nextui-org/react";
+import { Button} from "@nextui-org/react";
+import Link from "next/link";
 
 const Sidebar = () => {
-  const pathname = usePathname();
+	const pathname = usePathname();
 	return (
-    <div className="w-[20%] bg-darkTheme-700 dark:bg-darkTheme-100 h-[100vh] py-6 fixed">
-      <div className="mb-6">
+		<div className="z-[9999] w-[20%] max-w-[300px] bg-darkTheme-700 dark:bg-darkTheme-100 h-[100vh] py-6 fixed">
+			<div className="mx-10 mt-6 text-2xl">
+				<Link href="/" className="flex items-center gap-2">
 					<Image
 						src={logo}
 						alt=""
-						className="max-w-[200px] mx-auto"
+						className="max-w-[30px]"
 						width={0}
 						heigt={0}
 					/>
-      </div>
-      
-			<ul className="flex flex-col gap-6 mx-10 font-semibold">
+					ByteHive
+				</Link>
+			</div>
+
+			<ul className="flex flex-col  gap-6 mx-10 mt-10 font-semibold">
 				<li>
-					<Link href="/" className={`${pathname === '/' ? 'bg-primaryTheme-500 text-darkTheme-100' : ''} p-3 rounded-md flex items-center gap-4`}>
+					<Link
+						href="/"
+						className={`${
+							pathname === "/"
+								? "bg-primaryTheme-500 text-darkTheme-100"
+								: ""
+						} p-3 rounded-md flex items-center gap-4 hover:bg-primaryTheme-500 hover:text-darkTheme-100`}
+					>
 						<GoHomeFill className="w-6 h-full" /> Home
 					</Link>
 				</li>
-				<li >
-					<Link href="/tags" className={`${pathname === '/tags' ? 'bg-primaryTheme-500 text-darkTheme-100' : ''} p-3 rounded-md flex items-center gap-4`}>
+				<li>
+					<Link
+						href="/tags"
+						className={`${
+							pathname === "/tags"
+								? "bg-primaryTheme-500 text-darkTheme-100"
+								: ""
+						} p-3 rounded-md flex items-center gap-4 hover:bg-primaryTheme-500 hover:text-darkTheme-100`}
+					>
 						<HiTag className="w-6 h-full" /> Tags
 					</Link>
 				</li>
 				<li>
-					<Link href="/users" className={`${pathname === '/users' ? 'bg-primaryTheme-500 text-darkTheme-100' : ''} p-3 rounded-md flex items-center gap-4`}>
+					<Link
+						href="/users"
+						className={`${
+							pathname === "/users"
+								? "bg-primaryTheme-500 text-darkTheme-100"
+								: ""
+						} p-3 rounded-md flex items-center gap-4 hover:bg-primaryTheme-500 hover:text-darkTheme-100`}
+					>
 						<HiUserGroup className="w-6 h-full" /> Users
 					</Link>
 				</li>
 				<li>
-					<Link href="/bookmarks" className={`${pathname === '/bookmarks' ? 'bg-primaryTheme-500 text-darkTheme-100' : ''} p-3 rounded-md flex items-center gap-4`}>
+					<Link
+						href="/bookmarks"
+						className={`${
+							pathname === "/bookmarks"
+								? "bg-primaryTheme-500 text-darkTheme-100"
+								: ""
+						} p-3 rounded-md flex items-center gap-4 hover:bg-primaryTheme-500 hover:text-darkTheme-100`}
+					>
 						<HiBookmark className="w-6 h-full" /> Bookmark
 					</Link>
-        </li>
-        <li className="mt-[100px]">
-          <Button className=" font-semibold w-full" size="lg" variant="light">
-          <HiArrowLeftOnRectangle className="w-6 h-full"/>
-            Logout
-          </Button>
+				</li>
+				<li className="mt-[100px]">
+					<Button
+						className=" font-semibold w-full justify-start"
+						size="lg"
+						variant="light"
+						radius="sm"
+					>
+						<HiArrowLeftOnRectangle className="w-6 h-full" />
+						Logout
+					</Button>
 				</li>
 			</ul>
 		</div>

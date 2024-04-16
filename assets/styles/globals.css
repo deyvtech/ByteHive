@@ -8,3 +8,9 @@
 body {
     font-family: "Roboto", sans-serif;
 }
+
+@layer components {
+    .dark-hover {
+      @apply dark:hover:bg-primaryTheme-500 dark:hover:text-darkTheme-100;
+    }
+  }

@@ -1,7 +1,5 @@
-import Header from "@/components/Header";
 import "@/assets/styles/globals.css";
 import { Providers } from "./providers";
-import Sidebar from "@/components/Sidebar";
 
 export const metadata = {
 	title: "ByteHive | StackOverflow Clone",
@@ -14,13 +12,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en" className="sky-dark">
 			<body>
-				<Providers>
-					<Header />
-					<div className="flex">
-						<Sidebar />
-						<main className="w-[60%] p-10 ml-[20%] mt-[104px] h-[100vh]">{children}</main>
-					</div>
-				</Providers>
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	);
