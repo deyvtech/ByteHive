@@ -1,13 +1,13 @@
 import { HiMagnifyingGlass, HiBell } from "react-icons/hi2";
 import { Button, Badge, Avatar, Input } from "@nextui-org/react";
 import ThemeSwitcher from "./next-ui/ThemeSwitcher";
-
-
+import AuthButton from "./AuthButton";
+import { useSession, signOut } from "next-auth/react";
 const Header = () => {
+	const { data: session } = useSession();
 	return (
 		<>
 			<header className="z-[999] flex items-center justify-between px-10  py-6 text-white dark:bg-darkTheme-100 bg-white fixed w-full">
-				
 				<div className="w-[60%] relative ml-auto">
 					<Input
 						type="text"
@@ -26,21 +26,27 @@ const Header = () => {
 				</div>
 				<div className="flex items-center justify-end gap-5 w-[20%]">
 					<ThemeSwitcher />
-					<Badge content="99+" shape="circle" color="danger">
-						<Button
-							radius="full"
-							isIconOnly
-							aria-label="more than 99 notifications"
-							variant="light"
-						>
-							<HiBell size={24} />
-						</Button>
-					</Badge>
+					{session ? (
+						<>
+							<Badge content="99+" shape="circle" color="danger">
+								<Button
+									radius="full"
+									isIconOnly
+									aria-label="more than 99 notifications"
+									variant="light"
+								>
+									<HiBell size={24} />
+								</Button>
+							</Badge>
 
-					<Avatar
-						src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-						size="lg"
-					/>
+							<Avatar
+								src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+								size="lg"
+							/>
+						</>
+					) : (
+						<AuthButton />
+					)}
 				</div>
 			</header>
 		</>

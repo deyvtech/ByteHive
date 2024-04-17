@@ -1,5 +1,6 @@
 import "@/assets/styles/globals.css";
 import { Providers } from "./providers";
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata = {
 	title: "ByteHive | StackOverflow Clone",
@@ -10,10 +11,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="en" className="dark">
-			<body>
-				<Providers>{children}</Providers>
-			</body>
-		</html>
+		<AuthProvider>
+			<html lang="en" className="dark">
+				<body>
+					<Providers>{children}</Providers>
+				</body>
+			</html>
+		</AuthProvider>
 	);
 }

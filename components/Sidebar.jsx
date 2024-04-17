@@ -7,9 +7,11 @@ import logo from "@/assets/images/bytehive.svg";
 import Image from "next/image";
 import { Button} from "@nextui-org/react";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 
 const Sidebar = () => {
 	const pathname = usePathname();
+	const {data: session} = useSession()
 	return (
 		<div className="z-[9999] w-[20%] max-w-[300px] bg-darkTheme-700 dark:bg-darkTheme-100 h-[100vh] py-6 fixed">
 			<div className="mx-10 mt-6 text-2xl">
@@ -74,17 +76,21 @@ const Sidebar = () => {
 						<HiBookmark className="w-6 h-full" /> Bookmark
 					</Link>
 				</li>
-				<li className="mt-[100px]">
+				{session && (
+					<li className="mt-[100px]">
 					<Button
 						className=" font-semibold w-full justify-start"
 						size="lg"
 						variant="light"
 						radius="sm"
+						onClick={() => signOut()}
 					>
 						<HiArrowLeftOnRectangle className="w-6 h-full" />
 						Logout
 					</Button>
 				</li>
+				)}
+				
 			</ul>
 		</div>
 	);

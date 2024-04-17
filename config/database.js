@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 let isConnected = false;
+const MONGODB_NAME = process.env.MONGODB_DATABASE_NAME
 
 const  connectToDatabase = async () => {
 	// Prevent unknown queries
@@ -16,7 +17,7 @@ const  connectToDatabase = async () => {
 
 	try {
 		await mongoose.connect(process.env.MONGODB_URI, {
-			dbName: "bytehive",
+			dbName: MONGODB_NAME,
 		});
 		isConnected = true;
 		console.log("MongoDB is Connected");
