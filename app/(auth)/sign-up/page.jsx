@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from "next/navigation";
-
+import { signIn } from "next-auth/react";
 const API_DOMAIN = process.env.NEXT_PUBLIC_API_DOMAIN;
 
 export default function SignUp() {
@@ -153,7 +153,7 @@ export default function SignUp() {
 					>
 						Create an account
 					</Button>
-					<Button variant="outline" className="w-full">
+					<Button variant="outline" className="w-full" onClick={() => signIn('google')}>
 						Sign up with Google
 					</Button>
 				</div>

@@ -7,11 +7,11 @@ const AuthButton = () => {
 
 	return (
 		<div className="flex h-5 items-center space-x-4 text-small">
-			<Button onClick={() => router.push("/sign-in")} color="primary">
+			<Button onClick={() => router.push("/sign-in")} variant="light" color="secondary">
 				Sign in
 			</Button>
 			<Divider orientation="vertical" />
-			<Button onClick={() => router.push("/sign-up")} color="secondary">
+			<Button onClick={() => router.push("/sign-up")}  variant="light" color="primary">
 				Sign up
 			</Button>
 		</div>

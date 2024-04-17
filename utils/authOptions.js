@@ -11,7 +11,7 @@ export const authOptions = {
 			credentials: {},
 			async authorize(credentials) {
 				const { email, password } = credentials;
-				console.log(password)
+				// console.log(credentials)
 				try {
 					await connectToDatabase();
 					const user = await User.findOne({ email: email });
@@ -44,11 +44,42 @@ export const authOptions = {
 	},
 	// add token
 	callbacks: {
+		async signIn({ user, account }) {
+			if (account.provider === 'google'){
+				try {
+
+					const { name, email, image } = user;
+					// console.log(user);
+					await connectToDatabase();
+
+					const userExists = await User.findOne({ email });
+
+					if (userExists) {
+						return user;
+					}
+
+					const newUser = new User({
+						name,
+						email,
+						profile_url: image
+					})
+
+					const response = await newUser.save();
+					if (response.status === 200 || response.status === 201) {
+						return user
+					}
+
+				} catch (error) {
+					console.log(error)
+
+					return null
+				}
+			}
+			return user
+		},
 		async jwt({ token, user }) {
 			if (user) {
-				token.id = user._id
 				token.email = user.email;
-				token.name = user.name;
 			}
 
 			return token
@@ -56,11 +87,9 @@ export const authOptions = {
 		// call token in session
 		async session({ session, token }) {
 			if (session.user) {
-				session.user.id = token.id;
 				session.user.email = token.email;
-				session.user.name = token.name;
 			}
-			console.log(session)
+			// console.log(session)
 			return session
 		},
 	},

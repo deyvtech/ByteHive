@@ -1,6 +1,6 @@
 'use client'
 
-import { HiBookmark, HiTag, HiUserGroup, HiArrowLeftOnRectangle } from "react-icons/hi2";
+import { HiBookmark, HiTag, HiUserGroup, HiArrowLeftOnRectangle, HiUser  } from "react-icons/hi2";
 import { usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
 import logo from "@/assets/images/bytehive.svg";
@@ -64,33 +64,49 @@ const Sidebar = () => {
 						<HiUserGroup className="w-6 h-full" /> Users
 					</Link>
 				</li>
-				<li>
-					<Link
-						href="/bookmarks"
-						className={`${
-							pathname === "/bookmarks"
-								? "bg-primaryTheme-500 text-darkTheme-100"
-								: ""
-						} p-3 rounded-md flex items-center gap-4 hover:bg-primaryTheme-500 hover:text-darkTheme-100`}
-					>
-						<HiBookmark className="w-6 h-full" /> Bookmark
-					</Link>
-				</li>
+
 				{session && (
-					<li className="mt-[100px]">
-					<Button
-						className=" font-semibold w-full justify-start"
-						size="lg"
-						variant="light"
-						radius="sm"
-						onClick={() => signOut()}
-					>
-						<HiArrowLeftOnRectangle className="w-6 h-full" />
-						Logout
-					</Button>
-				</li>
+					<>
+					<li>
+							<Link
+								href="/profile"
+								className={`${
+									pathname === "/profile"
+										? "bg-primaryTheme-500 text-darkTheme-100"
+										: ""
+								} p-3 rounded-md flex items-center gap-4 hover:bg-primaryTheme-500 hover:text-darkTheme-100`}
+							>
+								<HiUser className="w-6 h-full" /> Profile
+							</Link>
+						</li>
+
+						<li>
+							<Link
+								href="/bookmarks"
+								className={`${
+									pathname === "/bookmarks"
+										? "bg-primaryTheme-500 text-darkTheme-100"
+										: ""
+								} p-3 rounded-md flex items-center gap-4 hover:bg-primaryTheme-500 hover:text-darkTheme-100`}
+							>
+								<HiBookmark className="w-6 h-full" /> Bookmark
+							</Link>
+						</li>
+
+						<li className="mt-[100px]">
+							<Button
+								className=" font-semibold w-full justify-start"
+								size="lg"
+								variant="light"
+								radius="sm"
+								onClick={() => signOut()}
+							>
+								<HiArrowLeftOnRectangle className="w-6 h-full" />
+								Logout
+							</Button>
+						</li>
+					</>
 				)}
-				
 			</ul>
 		</div>
 	);

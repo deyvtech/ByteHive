@@ -4,6 +4,7 @@ import Questions from "@/components/Question";
 
 export default function HomePage() {
 
+	
 	return (
 		<>
 			<div>

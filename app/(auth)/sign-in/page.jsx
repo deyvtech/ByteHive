@@ -41,16 +41,12 @@ export default function SignIn() {
 	};
 
   const signInForm = async () => {
-    console.log(user)
-
-
 		try {
 			const signInRes = await signIn("credentials", {
-   email: user.email_address,
-   password: user.password,
-   redirect: false,
-});
-      
+				email: user.email_address,
+				password: user.password,
+				redirect: false,
+			});
 
 			if (signInRes?.error) {
 				toast.error("Invalid Credentials");
@@ -63,16 +59,16 @@ export default function SignIn() {
 			}
 			console.log(error.response);
 		}
-	};
+  };
 
-	useEffect(() => {
+  useEffect(() => {
 		console.log(error);
 		if (Object.keys(error).length === 0 && submit) {
 			signInForm();
 		}
-	}, [error]);
+  }, [error]);
 
-	const validateForm = (data) => {
+  const validateForm = (data) => {
 		const errors = {};
 		const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
@@ -85,9 +81,9 @@ export default function SignIn() {
 			errors.password = "password is Required!";
 		}
 		return errors;
-	};
+  };
 
-	return (
+  return (
 		<>
 			<Card className="mx-auto max-w-sm">
 				<CardHeader>
@@ -133,7 +129,11 @@ export default function SignIn() {
 						>
 							Login
 						</Button>
-						<Button variant="outline" className="w-full">
+						<Button
+							variant="outline"
+							className="w-full"
+							onClick={() => signIn("google")}
+						>
 							Login with Google
 						</Button>
 					</div>
@@ -148,5 +148,5 @@ export default function SignIn() {
 
 			<Toaster />
 		</>
-	);
+  );
 }

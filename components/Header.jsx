@@ -40,8 +40,10 @@ const Header = () => {
 							</Badge>
 
 							<Avatar
-								src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+								showFallback 
+								src={`${session.user?.image}`}
 								size="lg"
+								name={`${session.user.name}`}
 							/>
 						</>
 					) : (
