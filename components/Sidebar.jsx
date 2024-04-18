@@ -13,7 +13,7 @@ const Sidebar = () => {
 	const pathname = usePathname();
 	const {data: session} = useSession()
 	return (
-		<div className="z-[9999] w-[20%] max-w-[300px] bg-darkTheme-700 dark:bg-darkTheme-100 h-[100vh] py-6 fixed">
+		<div className="z-[99] w-[20%] max-w-[300px] bg-darkTheme-700 dark:bg-darkTheme-100 h-[100vh] py-6 fixed">
 			<div className="mx-10 mt-6 text-2xl">
 				<Link href="/" className="flex items-center gap-2">
 					<Image

@@ -1,8 +1,10 @@
-import React from 'react'
+import FormAskQuestion from '@/components/FormAskQuestion'
 
 const QuestionAsk = () => {
   return (
-    <div>QuestionAsk</div>
+    <div>
+      <FormAskQuestion />
+    </div>
   )
 }
 

@@ -7,7 +7,7 @@ const Header = () => {
 	const { data: session } = useSession();
 	return (
 		<>
-			<header className="z-[999] flex items-center justify-between px-10  py-6 text-white dark:bg-darkTheme-100 bg-white fixed w-full">
+			<header className="z-[88] flex items-center justify-between px-10  py-6 text-white dark:bg-darkTheme-100 bg-white fixed w-full">
 				<div className="w-[60%] relative ml-auto">
 					<Input
 						type="text"

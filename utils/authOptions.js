@@ -38,7 +38,6 @@ export const authOptions = {
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 		}),
 	],
-	// add jwt as token
 	session: {
 		strategy: "jwt"
 	},
@@ -81,6 +80,7 @@ export const authOptions = {
 			if (user) {
 				token.email = user.email;
 			}
+			console.log(user)
 
 			return token
 		},

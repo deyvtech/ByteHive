@@ -3,7 +3,7 @@ import { Schema, models, model } from "mongoose";
 
 const TagSchema = new Schema({
     name: { type: String, required: true, unique: true },
-    description: { type: String, required: true },
+    description: {type: String, required: true,},
     questions: [{type: Schema.Types.ObjectId, ref: 'Question'}]
 });
 
