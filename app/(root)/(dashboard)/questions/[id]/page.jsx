@@ -1,8 +1,10 @@
+import QuestionDetails from '@/components/QuestionDetails'
 import React from 'react'
-
-const Question = () => {
+import { getQuestionById } from "@/lib/actions/question.action";
+const Question =  async ({ params }) => {
+  const result = await getQuestionById(params.id);
   return (
-    <div>Question</div>
+    <QuestionDetails result={result} />
   )
 }
 

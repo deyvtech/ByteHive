@@ -1,6 +1,9 @@
 import "@/assets/styles/globals.css";
+import "@/assets/styles/prism.css"
 import { Providers } from "./providers";
 import AuthProvider from "@/components/AuthProvider";
+
+
 
 export const metadata = {
 	title: "ByteHive | StackOverflow Clone",

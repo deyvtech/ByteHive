@@ -28,7 +28,7 @@ const Header = () => {
 					<ThemeSwitcher />
 					{session ? (
 						<>
-							<Badge content="99+" shape="circle" color="danger">
+							{/* <Badge content="99+" shape="circle" color="danger">
 								<Button
 									radius="full"
 									isIconOnly
@@ -37,12 +37,12 @@ const Header = () => {
 								>
 									<HiBell size={24} />
 								</Button>
-							</Badge>
+							</Badge> */}
 
 							<Avatar
 								showFallback
 								src={session.user?.image}
-								size="lg"
+								size="md"
 							/>
 						</>
 					) : (

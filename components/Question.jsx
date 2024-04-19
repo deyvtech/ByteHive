@@ -12,7 +12,7 @@ const Questions = ({ question }) => {
 			<ul className="flex gap-2 mt-4">
 				{question.tags.map((tag) => (
 					<li key={tag._id}>
-						<Link href={`/tags/${tag.name}`}>
+						<Link href={`/tags/${tag._id}`}>
 							<Chip
 								size="sm"
 								className="rounded-sm text-primaryTheme-700 font-light"

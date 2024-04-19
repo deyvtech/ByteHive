@@ -8,6 +8,10 @@ import Sidebar from "@/components/Sidebar";
 import Widget from "@/components/Widget";
 import Header from "@/components/Header";
 
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+
+TimeAgo.addDefaultLocale(en);
 
 export function Providers({ children }) {
 	const router = useRouter();

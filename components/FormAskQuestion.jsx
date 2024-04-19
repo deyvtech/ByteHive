@@ -1,11 +1,12 @@
 'use client'
 import { Input, Button, Chip } from "@nextui-org/react";
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { AiFillCloseCircle  } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
-import { addQuestion } from "@/lib/actions/askQuestion.action";
+import { addQuestion } from "@/lib/actions/question.action";
+import { useRouter, usePathname  } from "next/navigation";
 
 const FormAskQuestion = () => {
     const editorRef = useRef(null);
@@ -13,8 +14,11 @@ const FormAskQuestion = () => {
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState('')
     const [isSubmit, setIsSubmit] = useState(false)
+    const router = useRouter();
+    const pathname = usePathname();
 
-    const {data: session} = useSession()
+    const { data: session } = useSession()
+
     const log = () => {
       if (editorRef.current) {
         return editorRef.current.getContent();
@@ -26,8 +30,8 @@ const FormAskQuestion = () => {
         if (!isSubmit) {
             if (!session) {
                 return  toast.error('You need to sign in!!')
-             }
-     
+            }
+            
              e.preventDefault();
              const formData = new FormData(formRef.current);
              const data = {};
@@ -36,14 +40,19 @@ const FormAskQuestion = () => {
              });
      
              data.content = log()
-             data.tags = tags
+            data.tags = tags
+            data.authorEmail = session.user.email
+            data.pathname = pathname
      
              if (Object.values(data).some(value => value === '')) {
                  return toast.error('Some Input Field is Empty')
              } else {
                  await addQuestion(data)
                  setIsSubmit(true)
+                 
+                    router.push('/')
                  return toast.success('Successfully added question')
+
             }
             
         }
@@ -53,10 +62,6 @@ const FormAskQuestion = () => {
     const handleRemoveTag = (indexToRemove) => {
         setTags((prevTags) => prevTags.filter((_, index) => index !== indexToRemove));
       };
-
-    useEffect(() => {
-        console.log(tags)
-    }, [tags])
 	return (
 		<>
             <form ref={formRef} onSubmit={handleSubmit}>
