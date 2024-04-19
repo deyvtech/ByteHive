@@ -1,10 +1,9 @@
-"use client";
 import { Button, Divider, Link } from "@nextui-org/react";
 import Questions from "@/components/Question";
+import { getAllQuestion } from "@/lib/actions/askQuestion.action";
 
-export default function HomePage() {
-
-	
+export default async function HomePage() {
+	const fetchAll = await getAllQuestion()
 	return (
 		<>
 			<div>
@@ -19,7 +18,7 @@ export default function HomePage() {
 				</div>
 
 				<div className="mt-10 flex items-center justify-between">
-					<h3 className="text-lg">9999 questions</h3>
+					<h3 className="text-lg">{fetchAll.count } questions</h3>
 
 					<ul className="flex h-6 items-center space-x-3 text-small">
 						<li>
@@ -64,10 +63,12 @@ export default function HomePage() {
 						</li>
 					</ul>
 				</div>
-				<Questions />
-				<Questions />
-				<Questions />
-				<Questions />
+				{fetchAll.questions.map((question) => (
+					<Questions
+						key={question._id}
+						question={question}
+						/>
+				)) }
 			</div>
 		</>
 	);

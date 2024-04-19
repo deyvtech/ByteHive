@@ -80,7 +80,7 @@ export const authOptions = {
 			if (user) {
 				token.email = user.email;
 			}
-			console.log(user)
+			// console.log(user)
 
 			return token
 		},

@@ -11,7 +11,7 @@ const  connectToDatabase = async () => {
 	if (!process.env.MONGODB_URI) console.log("Missing MongoDB URL");
 
 	if (isConnected) {
-		console.log("MongoDB is already conneted");
+		console.log("MongoDB is already connected");
 		return;
 	}
 

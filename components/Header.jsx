@@ -40,10 +40,9 @@ const Header = () => {
 							</Badge>
 
 							<Avatar
-								showFallback 
-								src={`${session.user?.image}`}
+								showFallback
+								src={session.user?.image}
 								size="lg"
-								name={`${session.user.name}`}
 							/>
 						</>
 					) : (
