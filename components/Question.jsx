@@ -11,7 +11,7 @@ const Questions = ({ question }) => {
 		<div className="mt-5 bg-darkTheme-700 dark:bg-darkTheme-100 px-5 py-8 rounded-md">
 			<Link href={`/questions/${question._id}`} className="text-2xl text-darkTheme-100  dark:text-white">{question.title}</Link>
 			<ul className="flex gap-2 mt-4">
-				{question.tags.map((tag) => (
+				{question.populatedTags.map((tag) => (
 					<li key={tag._id}>
 						<Link href={`/tags/${tag._id}`}>
 							<Chip

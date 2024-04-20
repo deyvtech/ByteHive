@@ -7,11 +7,13 @@ import { getQuestionByUser } from "@/lib/actions/question.action";
 
 const ProfilePage = async () => {
   const session = await getServerSession(authOptions);
-  const questions = await getQuestionByUser(session.user.email)
+  const { metadata, data } = await getQuestionByUser(session.user.email)
+  
+  console.log(data)
   return (
     <div>
     
-      <UsersQuestion  questions={questions}/>
+      <UsersQuestion  questions={data}/>
     </div>
   )
 }
