@@ -6,6 +6,7 @@ import {
 } from "react-icons/hi2";
 
 const Questions = ({ question }) => {
+	let formatter = Intl.NumberFormat("en", { notation: "compact" });
 	return (
 		<div className="mt-5 bg-darkTheme-700 dark:bg-darkTheme-100 px-5 py-8 rounded-md">
 			<Link href={`/questions/${question._id}`} className="text-2xl text-darkTheme-100  dark:text-white">{question.title}</Link>
@@ -34,7 +35,7 @@ const Questions = ({ question }) => {
 					>
 						<HiOutlineHeart className="w-6 h-full" />
 					</Button>
-					1.5K Likes
+					{formatter.format(question.upVotes.length)} Likes
 				</div>
 				<div className="flex items-center gap-2 ">
 					<Button
@@ -45,7 +46,7 @@ const Questions = ({ question }) => {
 					>
 						<HiOutlineChatBubbleOvalLeft className="w-6 h-full" />
 					</Button>
-					24M Answers
+					{formatter.format(question.answers.length)} Answers
 				</div>
 				<div className="flex items-center gap-2 ">
 					<Button
@@ -56,7 +57,7 @@ const Questions = ({ question }) => {
 					>
 						<HiOutlineEye className="w-6 h-full" />
 					</Button>
-					30K Views
+					{formatter.format(question.views)} Views
 				</div>
 			</div>
 		</div>

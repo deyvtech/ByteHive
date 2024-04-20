@@ -25,6 +25,7 @@ export const authOptions = {
 					if (!validPassword) {
 						return null;
 					}
+
 					// Return the user object if authentication succeeds
 					return user;
 				} catch (error) {
@@ -48,14 +49,12 @@ export const authOptions = {
 				try {
 
 					const { name, email, image } = user;
-					// console.log(user);
-					await connectToDatabase();
 
 					const userExists = await User.findOne({ email });
-
 					if (userExists) {
 						return user;
 					}
+
 
 					const newUser = new User({
 						name,
@@ -74,22 +73,27 @@ export const authOptions = {
 					return null
 				}
 			}
+
+			// return to jwt the user info from database
 			return user
+			
 		},
 		async jwt({ token, user }) {
+
+			// pass the user info in token
 			if (user) {
-				token.email = user.email;
+				token.user = user
 			}
-			// console.log(user)
 
 			return token
 		},
 		// call token in session
 		async session({ session, token }) {
+			// pass the token in session
 			if (session.user) {
 				session.user.email = token.email;
+				session.user.image = token.user.profile_url || token.user.image
 			}
-			// console.log(session)
 			return session
 		},
 	},

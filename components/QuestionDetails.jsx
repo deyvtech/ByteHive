@@ -12,6 +12,7 @@ import QuestionContentDetails from "./QuestionContentDetails";
 import Time from "./Time";
 import FormAnswer from "./FormAnswer";
 import HtmlParse from "./HtmlParse";
+import React from "react";
 
 const QuestionDetails = ({ result }) => {
 	return (
@@ -43,7 +44,7 @@ const QuestionDetails = ({ result }) => {
 						size="sm"
 						showFallback
 						name={result.author?.name}
-						src={result.author?.images}
+						src={result.author?.profile_url}
 						className="w-8 h-8 text-tiny"
 					/>
 					<p className="text-tiny">{result.author?.name}</p>
@@ -51,7 +52,7 @@ const QuestionDetails = ({ result }) => {
 			</div>
 			<Divider className="mt-5" />
 			{result.answers.map((answer) => (
-				<>
+				<React.Fragment key={answer._id}>
 					<Card className="rounded-sm my-5">
 						<CardBody className="rounded-sm">
 							<HtmlParse content={answer.content} />
@@ -61,7 +62,7 @@ const QuestionDetails = ({ result }) => {
 							size="sm"
 							showFallback
 							name={answer.author?.name}
-							src={answer.author?.images}
+							src={answer.author?.profile_url}
 							className="w-8 h-8 text-tiny"
 						/>
 							<Time
@@ -70,7 +71,7 @@ const QuestionDetails = ({ result }) => {
 							/>
 						</CardFooter>
 					</Card>
-				</>
+				</React.Fragment>
 			))}
 			<AvatarGroup
 				isBordered
@@ -79,15 +80,15 @@ const QuestionDetails = ({ result }) => {
 				className="ml-auto justify-end"
 			>
 				{result.answers.map((answer) => (
-					<>
+					<React.Fragment key={answer._id}>
 						<Avatar
 							size="sm"
 							showFallback
 							name={answer.author?.name}
-							src={answer.author?.images}
+							src={answer.author?.profile_url}
 							className="w-8 h-8 text-tiny"
 						/>
-					</>
+					</React.Fragment>
 				))}
 			</AvatarGroup>
 			<Divider className="mt-5" />

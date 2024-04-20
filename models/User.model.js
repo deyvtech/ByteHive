@@ -6,6 +6,7 @@ const UserSchema = new Schema({
 	email: { type: String, required: true, unique: true },
 	password: { type: String },
 	profile_url: { type: String },
+	questions:[{type: Schema.Types.ObjectId, ref: "Question"}],
 	saved: [{ type: Schema.Types.ObjectId, ref: "Question" }],
 	joined_at: { type: Date, default: Date.now },
 });

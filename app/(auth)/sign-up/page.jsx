@@ -65,7 +65,6 @@ export default function SignUp() {
  }
 
 	useEffect(() => {
-    console.log(error);
     if (Object.keys(error).length === 0 && submit) {
       signUpForm()
     }

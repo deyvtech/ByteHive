@@ -3,7 +3,9 @@ import "@/assets/styles/prism.css"
 import { Providers } from "./providers";
 import AuthProvider from "@/components/AuthProvider";
 
-
+import Sidebar from "@/components/Sidebar";
+import Widget from "@/components/Widget";
+import Header from "@/components/Header";
 
 export const metadata = {
 	title: "ByteHive | StackOverflow Clone",
@@ -12,12 +14,21 @@ export const metadata = {
 	keywords: "questions, find answers, ask questions",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
 	return (
 		<AuthProvider>
 			<html lang="en" className="dark">
 				<body>
-					<Providers>{children}</Providers>
+					<Providers>
+						<Header />
+						<div className="flex">
+							<Sidebar />
+							<main className="w-[60%] p-10 ml-[20%] mt-[104px] h-[100vh]">
+								{children}
+							</main>
+							<Widget />
+						</div>
+					</Providers>
 				</body>
 			</html>
 		</AuthProvider>

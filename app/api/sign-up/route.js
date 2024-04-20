@@ -30,6 +30,7 @@ export async function POST(request) {
 			name: `${first_name} ${last_name}`,
 			email: email_address,
 			password: hashedPassword,
+			profile_url: `https://ui-avatars.com/api/?background=random&name=${first_name + last_name}`
         });
         
         

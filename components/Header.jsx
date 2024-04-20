@@ -1,9 +1,11 @@
+'use client'
+
 import { HiMagnifyingGlass, HiBell } from "react-icons/hi2";
 import { Button, Badge, Avatar, Input } from "@nextui-org/react";
 import ThemeSwitcher from "./next-ui/ThemeSwitcher";
 import AuthButton from "./AuthButton";
 import { useSession, signOut } from "next-auth/react";
-const Header = () => {
+const Header =  () => {
 	const { data: session } = useSession();
 	return (
 		<>

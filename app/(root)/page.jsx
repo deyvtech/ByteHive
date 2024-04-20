@@ -1,7 +1,7 @@
 import { Button, Divider, Link } from "@nextui-org/react";
 import Questions from "@/components/Question";
 import { getAllQuestion } from "@/lib/actions/question.action";
-
+import React from "react";
 export default async function HomePage() {
 	const fetchAll = await getAllQuestion()
 	return (
@@ -16,7 +16,6 @@ export default async function HomePage() {
 						Ask a Question
 					</Link>
 				</div>
-
 				<div className="mt-10 flex items-center justify-between">
 					<h3 className="text-lg">{fetchAll.count} question{ fetchAll.count <= 1 ? '' : 's'}</h3>
 
@@ -65,10 +64,11 @@ export default async function HomePage() {
 				</div>
 				{
 					fetchAll.questions.length !== 0 ? fetchAll.questions.map((question) => (
-					<Questions
-						key={question._id}
+						<React.Fragment key={question._id}>
+						<Questions
 						question={question}
 						/>
+						</React.Fragment>
 					)) : (
 							<h2 className="mt-10">No Question Result</h2>
 				)

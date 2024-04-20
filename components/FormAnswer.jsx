@@ -28,10 +28,10 @@ const FormAnswer = ({ questionId }) => {
             if (editorRef.current) {
                 editorRef.current.setContent('');
             }
-            
+
             toast.success('Answered Successfully')
         } catch (error) {
-            
+            console.log(error)
         }
 	
 	};

@@ -1,7 +1,7 @@
 'use client'
 
 import { HiBookmark, HiTag, HiUserGroup, HiArrowLeftOnRectangle, HiUser  } from "react-icons/hi2";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { GoHomeFill } from "react-icons/go";
 import logo from "@/assets/images/bytehive.svg";
 import Image from "next/image";
@@ -99,7 +99,11 @@ const Sidebar = () => {
 								size="lg"
 								variant="light"
 								radius="sm"
-								onClick={() => signOut()}
+								onClick={() => {
+									signOut()
+									redirect('/sign-in')
+
+								}}
 							>
 								<HiArrowLeftOnRectangle className="w-6 h-full" />
 								Logout
