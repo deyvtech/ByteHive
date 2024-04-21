@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 let page = 2
 
 
-const InfiniteScroll = () => {
+const InfiniteScroll = ({searchParams}) => {
 	const [ref, inView] = useInView();
 
 	const {data: session} = useSession()

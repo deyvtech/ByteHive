@@ -12,7 +12,6 @@ let id = ''
 export default async function HomePage({ searchParams }) {
 	const session = await getServerSession(authOptions);
 
-	console.log(searchParams?.search)
 	const { metadata, data, userId } = await getAllQuestion(
 		1,
 		5,

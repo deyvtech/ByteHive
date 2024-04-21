@@ -38,7 +38,7 @@ const Header = () => {
  
 	return (
 		<>
-			<header className="z-[88] flex items-center justify-between px-4 md:px-10  py-6 text-white k dark:bg-darkTheme-100 md:dark:bg-darkTheme-100  fixed w-full">
+			<header className="z-[88] flex items-center justify-between px-4 md:px-10  py-6 text-white k dark:bg-darkTheme-100 md:dark:bg-darkTheme-100 bg-[#ededf1] fixed w-full">
 				<div className="w-[60%] relative ml-[15%] md:ml-auto">
 					<Input
 						type="text"
