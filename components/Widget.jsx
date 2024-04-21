@@ -1,94 +1,39 @@
+import { getTopQuestions } from "@/lib/actions/question.action";
+import { getTopTags } from "@/lib/actions/tag.action";
 import { Chip, Link } from "@nextui-org/react";
-const Widget = () => {
+const Widget = async () => {
+	const topQuestion = await getTopQuestions();
+	const topTag = await getTopTags()
 	return (
-		<div className="w-[20%]  dark:bg-darkTheme-100 h-[100vh] mt-[104px] py-6 fixed right-0 pl-5">
+		<div className="w-[20%] hidden lg:block  dark:bg-darkTheme-100 h-[100vh] mt-[104px] py-6 fixed right-0 pl-5">
 			<h2 className="text-lg font-semibold my-2">Top Questions</h2>
 
 			<ul className="space-y-3">
-				<li>
-					<Link className="text-md text-primaryTheme-700 cursor-pointer">
-						Lorem ipsum dolor sit amet, consectetur adipisicing
-						elit?.
-					</Link>
-				</li>
-				<li>
-					<Link className="text-md text-primaryTheme-700 cursor-pointer">
-						Lorem ipsum dolor sit amet, consectetur adipisicing
-						elit?.
-					</Link>
-				</li>
-				<li>
-					<Link className="text-md text-primaryTheme-700 cursor-pointer">
-						Lorem ipsum dolor sit amet, consectetur adipisicing
-						elit?.
-					</Link>
-				</li>
-				<li>
-					<Link className="text-md text-primaryTheme-700 cursor-pointer">
-						Lorem ipsum dolor sit amet, consectetur adipisicing
-						elit?.
-					</Link>
-				</li>
-				<li>
-					<Link className="text-md text-primaryTheme-700 cursor-pointer">
-						Lorem ipsum dolor sit amet, consectetur adipisicing
-						elit?.
-					</Link>
-				</li>
+				{topQuestion.map((question) => (
+					<li key={question._id}>
+						<Link
+							href={`/questions/${question._id}`}
+							className="text-md text-primaryTheme-700 cursor-pointer"
+						>
+							{question.title}
+						</Link>
+					</li>
+				))}
 			</ul>
-
 			<h2 className="text-lg font-semibold mt-4 mb-2 ">Popular Tags</h2>
 			<ul className="grid space-y-1">
-				<li>
-					<Link href="/tags/reactjs">
-						<Chip
-							size="sm"
-							className="rounded-sm text-primaryTheme-700 font-light"
-						>
-							Javascript
-						</Chip>
-					</Link>
-				</li>
-				<li>
-					<Link href="/tags/reactjs">
-						<Chip
-							size="sm"
-							className="rounded-sm text-primaryTheme-700 font-light"
-						>
-							PHP
-						</Chip>
-					</Link>
-				</li>
-				<li>
-					<Link href="/tags/reactjs">
-						<Chip
-							size="sm"
-							className="rounded-sm text-primaryTheme-700 font-light"
-						>
-							React JS
-						</Chip>
-					</Link>
-				</li>
-				<li>
-					<Link href="/tags/reactjs">
-						<Chip
-							size="sm"
-							className="rounded-sm text-primaryTheme-700 font-light"
-						>
-							Node JS
-						</Chip>
-					</Link>
-				</li>
-				<li>
-					<Link href="/tags/reactjs">
-						<Chip
-							size="sm"
-							className="rounded-sm text-primaryTheme-700 font-light"
-						>
-							Laravel
-						</Chip>
-					</Link>
-				</li>
+				{topTag.map((tag) => (
+					<li key={tag._id}>
+						<Link href={`/tags/${tag.name}`}>
+							<Chip
+								size="sm"
+								className="rounded-sm text-primaryTheme-700 font-light"
+							>
+								{tag.name}
+							</Chip>
+						</Link>
+					</li>
+				))}
 			</ul>
 		</div>
 	);

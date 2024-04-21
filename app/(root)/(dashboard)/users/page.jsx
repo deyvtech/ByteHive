@@ -7,7 +7,7 @@ const UsersPage = async () => {
 	return (
 		<div>
 			<h1 className="text-4xl font-bold">Users</h1>
-			<ul className="grid grid-cols-3 gap-4 mt-10">
+			<ul className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-10">
 				{users.map((user) => (
 					<React.Fragment key={user._id}>
 						<Card className="py-4" key={user._id}>

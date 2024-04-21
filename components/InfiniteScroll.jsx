@@ -5,6 +5,7 @@ import { Button, Card, Skeleton, Pagination } from "@nextui-org/react";
 import { getAllQuestion } from "@/lib/actions/question.action";
 import Questions from "./Question";
 import { useInView } from "react-intersection-observer";
+import { useSession } from "next-auth/react";
 
 let page = 2
 
@@ -12,17 +13,20 @@ let page = 2
 const InfiniteScroll = () => {
 	const [ref, inView] = useInView();
 
+	const {data: session} = useSession()
+
 	const [fetchAll, setFetchAll] = useState([]);
     const [loading, setLoading] = useState(false); 
-    const [maxPage, setMaxPage] = useState(false)
+	const [maxPage, setMaxPage] = useState(false)
+	const [id, setId] = useState(null)
 	useEffect(() => {
         const loadMore = async () => {
             try {
                 if (inView && !maxPage) {
                     setLoading(true);
-                    const {metadata, data } = await getAllQuestion(page);
-                    setFetchAll(prevFetchAll => [...prevFetchAll, ...data]);
-
+                    const {metadata, data, userId } = await getAllQuestion(page, 5, session?.user.email);
+					setFetchAll(prevFetchAll => [...prevFetchAll, ...data]);
+					setId(JSON.parse(JSON.stringify(userId)))
                     if (Math.ceil(metadata.totalCount / metadata.pageSize) === page) {
                         setMaxPage(true)
                     }
@@ -37,7 +41,11 @@ const InfiniteScroll = () => {
         };
     
         loadMore();
-    }, [inView]);
+	}, [inView]);
+	
+	useEffect(() => {
+		console.log(id)
+	}, [id])
 
     useEffect(() => {
         page = 2
@@ -46,8 +54,8 @@ const InfiniteScroll = () => {
 	return (
 		<div >
 			{fetchAll.map((question) => (
-				<React.Fragment key={question._id}>
-					<Questions question={question} />
+				<React.Fragment key={question._id} >
+					<Questions question={question} userId={id }/>
 				</React.Fragment>
             ))}
 

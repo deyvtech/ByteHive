@@ -23,7 +23,7 @@ const TagsPage = async () => {
 				for others to find and answer your question.
 			</p>
 
-			<ul className="grid grid-cols-3 gap-4">
+			<ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
 				{data.map((tag) => (
 					<li key={tag._id}>
 						<Card className="max-w-[400px]">

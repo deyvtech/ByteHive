@@ -74,7 +74,7 @@ const QuestionDetails = ({ result, answers, params }) => {
 			</div>
 			<Divider className="mt-5" />
 			{!loading ? (
-				dataAnswer.data.map((answer) => (
+				dataAnswer?.data.map((answer) => (
 					<React.Fragment key={answer._id}>
 						<Card className="rounded-sm my-5">
 							<CardBody className="rounded-sm">
@@ -122,10 +122,11 @@ const QuestionDetails = ({ result, answers, params }) => {
 				))}
 			</AvatarGroup>
 			<Pagination
+				className="mt-5"
 				variant="light"
 				color="secondary"
 				showControls
-				total={dataAnswer.metadata.totalCount / 2}
+				total={dataAnswer?.metadata.totalCount / 2}
 				initialPage={1}
 				onChange={handlechange}
 			/>

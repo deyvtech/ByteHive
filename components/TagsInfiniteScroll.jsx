@@ -55,7 +55,7 @@ const TagInfiniteScroll = () => {
 
 	return (
 		<>
-			<ul className="grid grid-cols-3 gap-4">
+			<ul className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
 				{fetchAll.map((tag) => (
 					<li key={tag._id}>
 						<Card className="max-w-[400px]">
