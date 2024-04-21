@@ -3,8 +3,9 @@ import Questions from "@/components/Question";
 import { getAllQuestion } from "@/lib/actions/question.action";
 import React from "react";
 import InfiniteScroll from "@/components/InfiniteScroll";
+import TabsUI from "@/components/next-ui/TabsUI";
 export default async function HomePage() {
-	const {metadata, data} = await getAllQuestion()
+	const { metadata, data } = await getAllQuestion();
 
 	return (
 		<>
@@ -19,62 +20,24 @@ export default async function HomePage() {
 					</Link>
 				</div>
 				<div className="mt-10 flex items-center justify-between">
-					<h3 className="text-lg">{metadata.totalCount} question{ metadata.totalCount <= 1 ? '' : 's'}</h3>
+					<h3 className="text-lg">
+						{metadata.totalCount} question
+						{metadata.totalCount <= 1 ? "" : "s"}
+					</h3>
 
 					<ul className="flex h-6 items-center space-x-3 text-small">
-						<li>
-							<Button
-								radius="sm"
-								className="dark:text-primaryTheme-500 bg-primaryTheme-500 dark:bg-darkTheme-200 font-medium "
-							>
-								Newest
-							</Button>
-						</li>
-						<Divider orientation="vertical" />
-						<li>
-							<Button
-								radius="sm"
-								variant="light"
-								className="dark:hover:text-primaryTheme-500 text-primaryTheme-700"
-							>
-								Week
-							</Button>
-						</li>
-						<Divider orientation="vertical" />
-
-						<li>
-							<Button
-								radius="sm"
-								variant="light"
-								className="dark:hover:text-primaryTheme-500 text-primaryTheme-700"
-							>
-								Month
-							</Button>
-						</li>
-						<Divider orientation="vertical" />
-
-						<li>
-							<Button
-								radius="sm"
-								variant="light"
-								className="dark:hover:text-primaryTheme-500 text-primaryTheme-700"
-							>
-								Unaswered
-							</Button>
-						</li>
+						<TabsUI />
 					</ul>
 				</div>
-				{
-					metadata.totalCount !== 0 ? data.map((question) => (
+				{metadata.totalCount !== 0 ? (
+					data.map((question) => (
 						<React.Fragment key={question._id}>
-						<Questions
-						question={question}
-						/>
+							<Questions question={question} />
 						</React.Fragment>
-					)) : (
-							<h2 className="mt-10">No Question Result</h2>
-				)
-				}
+					))
+				) : (
+					<h2 className="mt-10">No Question Result</h2>
+				)}
 
 				<InfiniteScroll />
 			</div>

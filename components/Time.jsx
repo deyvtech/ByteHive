@@ -5,7 +5,7 @@ import { Code} from "@nextui-org/react";
 const Time = ({ time , text}) => {
 	return (
 		<>
-			<Code color="default" className="mt-3 ml-auto block max-w-max text-tiny" size="sm" radius="none">
+			<Code color="default" className="mt-2 ml-auto block max-w-max text-[10px]"  radius="none">
                 {text} {' '}
 				<ReactTimeAgo date={time} locale="en-US" />
 			</Code>

@@ -80,7 +80,7 @@ const Sidebar = () => {
 							</Link>
 						</li>
 
-						<li>
+						{/* <li>
 							<Link
 								href="/bookmarks"
 								className={`${
@@ -91,7 +91,7 @@ const Sidebar = () => {
 							>
 								<HiBookmark className="w-6 h-full" /> Bookmark
 							</Link>
-						</li>
+						</li> */}
 
 						<li className="mt-[100px]">
 							<Button

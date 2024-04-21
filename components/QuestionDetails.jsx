@@ -7,6 +7,7 @@ import {
 	Avatar,
 	CardFooter,
 	AvatarGroup,
+	User,
 } from "@nextui-org/react";
 import QuestionContentDetails from "./QuestionContentDetails";
 import Time from "./Time";
@@ -38,16 +39,16 @@ const QuestionDetails = ({ result }) => {
 				))}
 			</ul>
 			<div className="flex flex-col items-end justify-end mt-3">
-				<Time time={new Date(result.createdAt)} text={"Asked"} />
 				<div className="flex justify-center items-center gap-2 mt-2">
-					<Avatar
-						size="sm"
-						showFallback
+					<User
 						name={result.author?.name}
-						src={result.author?.profile_url}
-						className="w-8 h-8 text-tiny"
+						description={
+								<Time time={new Date(result.createdAt)} text={"Asked"} />
+						}
+						avatarProps={{
+							src: `${result.author?.profile_url}`,
+						}}
 					/>
-					<p className="text-tiny">{result.author?.name}</p>
 				</div>
 			</div>
 			<Divider className="mt-5" />
@@ -58,17 +59,15 @@ const QuestionDetails = ({ result }) => {
 							<HtmlParse content={answer.content} />
 						</CardBody>
 						<CardFooter className="mt-2 flex-col items-end justify-end">
-						<Avatar
-							size="sm"
-							showFallback
-							name={answer.author?.name}
-							src={answer.author?.profile_url}
-							className="w-8 h-8 text-tiny"
-						/>
-							<Time
-								time={new Date(answer.createdAt)}
-								text={"Answered"}
-							/>
+						<User
+						name={answer.author?.name}
+						description={
+								<Time time={new Date(answer.createdAt)} text={"Answered"} />
+						}
+						avatarProps={{
+							src: `${answer.author?.profile_url}`,
+						}}
+					/>
 						</CardFooter>
 					</Card>
 				</React.Fragment>
