@@ -1,3 +1,4 @@
+"use client";
 import {
 	Divider,
 	Link,
@@ -8,14 +9,31 @@ import {
 	CardFooter,
 	AvatarGroup,
 	User,
+	Pagination,
+	Skeleton,
 } from "@nextui-org/react";
 import QuestionContentDetails from "./QuestionContentDetails";
 import Time from "./Time";
 import FormAnswer from "./FormAnswer";
 import HtmlParse from "./HtmlParse";
-import React from "react";
+import React, { useState } from "react";
+import { getAnswerByQuestion } from "@/lib/actions/answer.action";
 
-const QuestionDetails = ({ result }) => {
+const QuestionDetails = ({ result, answers, params }) => {
+	const [dataAnswer, setDataAnswers] = useState(answers);
+	const [loading, setLoading] = useState(false);
+
+	const handlechange = async (e) => {
+		try {
+			setLoading(true);
+			const data = await getAnswerByQuestion(params, e);
+			setDataAnswers(data);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setLoading(false);
+		}
+	};
 	return (
 		<div className="pb-10">
 			<h1 className="text-2xl">{result.title}</h1>
@@ -43,7 +61,10 @@ const QuestionDetails = ({ result }) => {
 					<User
 						name={result.author?.name}
 						description={
-								<Time time={new Date(result.createdAt)} text={"Asked"} />
+							<Time
+								time={new Date(result.createdAt)}
+								text={"Asked"}
+							/>
 						}
 						avatarProps={{
 							src: `${result.author?.profile_url}`,
@@ -52,26 +73,36 @@ const QuestionDetails = ({ result }) => {
 				</div>
 			</div>
 			<Divider className="mt-5" />
-			{result.answers.map((answer) => (
-				<React.Fragment key={answer._id}>
-					<Card className="rounded-sm my-5">
-						<CardBody className="rounded-sm">
-							<HtmlParse content={answer.content} />
-						</CardBody>
-						<CardFooter className="mt-2 flex-col items-end justify-end">
-						<User
-						name={answer.author?.name}
-						description={
-								<Time time={new Date(answer.createdAt)} text={"Answered"} />
-						}
-						avatarProps={{
-							src: `${answer.author?.profile_url}`,
-						}}
-					/>
-						</CardFooter>
-					</Card>
-				</React.Fragment>
-			))}
+			{!loading ? (
+				dataAnswer.data.map((answer) => (
+					<React.Fragment key={answer._id}>
+						<Card className="rounded-sm my-5">
+							<CardBody className="rounded-sm">
+								<HtmlParse content={answer.content} />
+							</CardBody>
+							<CardFooter className="mt-2 flex-col items-end justify-end">
+								<User
+									name={answer.author[0]?.name}
+									description={
+										<Time
+											time={new Date(answer.createdAt)}
+											text={"Answered"}
+										/>
+									}
+									avatarProps={{
+										src: `${answer.author[0]?.profile_url}`,
+									}}
+								/>
+							</CardFooter>
+						</Card>
+					</React.Fragment>
+				))
+			) : (
+				<Skeleton className="rounded-lg my-10">
+					<div className="h-24 rounded-lg bg-default-300"></div>
+				</Skeleton>
+			)}
+
 			<AvatarGroup
 				isBordered
 				max={5}
@@ -90,6 +121,14 @@ const QuestionDetails = ({ result }) => {
 					</React.Fragment>
 				))}
 			</AvatarGroup>
+			<Pagination
+				variant="light"
+				color="secondary"
+				showControls
+				total={dataAnswer.metadata.totalCount / 2}
+				initialPage={1}
+				onChange={handlechange}
+			/>
 			<Divider className="mt-5" />
 			<FormAnswer questionId={result._id} />
 		</div>

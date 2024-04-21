@@ -1,3 +1,4 @@
+import TagInfiniteScroll from "@/components/TagsInfiniteScroll";
 import { getAllTags } from "@/lib/actions/tag.action";
 import {
 	Card,
@@ -10,8 +11,10 @@ import {
 } from "@nextui-org/react";
 
 const TagsPage = async () => {
-	const tags = await getAllTags();
+	const {data} = await getAllTags();
+
 	return (
+		
 		<div>
 			<h1 className="text-4xl font-bold">Tags</h1>
 			<p className="my-4">
@@ -21,7 +24,7 @@ const TagsPage = async () => {
 			</p>
 
 			<ul className="grid grid-cols-3 gap-4">
-				{tags.map((tag) => (
+				{data.map((tag) => (
 					<li key={tag._id}>
 						<Card className="max-w-[400px]">
 							<CardHeader className="flex gap-3">
@@ -53,7 +56,9 @@ const TagsPage = async () => {
 						</Card>
 					</li>
 				))}
+
 			</ul>
+			<TagInfiniteScroll/>
 		</div>
 	);
 };
