@@ -1,29 +1,43 @@
 import mongoose from "mongoose";
 
-let isConnected = false;
-const MONGODB_NAME = process.env.MONGODB_DATABASE_NAME
+const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_NAME = process.env.MONGODB_DATABASE_NAME;
 
-const  connectToDatabase = async () => {
-	// Prevent unknown queries
-	mongoose.set("strictQuery", true);
+const connectToDatabase = async () => {
+    mongoose.set("strictQuery", true);
 
-	// Check if there's MongoDB URI
-	if (!process.env.MONGODB_URI) console.log("Missing MongoDB URL");
+    if (!MONGODB_URI) {
+        console.error("Missing MONGODB_URI in environment variables");
+        return;
+    }
 
-	if (isConnected) {
-		console.log("MongoDB is already connected");
-		return;
-	}
+    // 1. Check current connection state
+    // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
+    const state = mongoose.connection.readyState;
 
-	try {
-		await mongoose.connect(process.env.MONGODB_URI, {
-			dbName: MONGODB_NAME,
-		});
-		isConnected = true;
-		console.log("MongoDB is Connected");
-	} catch (error) {
-		console.log(error);
-	}
+    if (state === 1) {
+        console.log("MongoDB is already connected");
+        return;
+    }
+
+    if (state === 2) {
+        console.log("MongoDB is currently connecting...");
+        return;
+    }
+
+    try {
+        await mongoose.connect(MONGODB_URI, {
+            dbName: MONGODB_NAME,
+            // 2. CRITICAL: Disable buffering so it fails fast 
+            // instead of hanging for 10 seconds.
+            bufferCommands: false, 
+        });
+        
+        console.log("MongoDB Connected Successfully");
+    } catch (error) {
+        console.error("MongoDB connection error:", error);
+        throw error; 
+    }
 };
 
-export default connectToDatabase
+export default connectToDatabase;

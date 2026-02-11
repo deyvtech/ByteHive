@@ -9,7 +9,7 @@ const Widget = async () => {
 			<h2 className="text-lg font-semibold my-2">Top Questions</h2>
 
 			<ul className="space-y-3">
-				{topQuestion.map((question) => (
+				{topQuestion?.map((question) => (
 					<li key={question._id}>
 						<Link
 							href={`/questions/${question._id}`}
