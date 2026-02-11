@@ -27,7 +27,7 @@ export default async function RootLayout({ children }) {
 						
 						<div className="flex gap-4 lg:gap-0">
 							<Sidebar />
-							<main className="...">
+							<main className="w-full md:w-[90%] lg:w-[60%] p-10 ml-0 md:ml-[10%] lg:ml-[20%] mt-[104px] h-[100vh]">
 								{children}
 							</main>
 							<Widget />
