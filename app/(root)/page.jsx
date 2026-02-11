@@ -1,30 +1,27 @@
-import { Button, Divider, Link, user } from "@nextui-org/react";
+import { Button, Divider, Link } from "@nextui-org/react";
 import Questions from "@/components/Question";
 import { getAllQuestion } from "@/lib/actions/question.action";
-import React from "react";
+import React, { Suspense } from "react"; // Added Suspense
 import InfiniteScroll from "@/components/InfiniteScroll";
 import TabsUI from "@/components/next-ui/TabsUI";
 
 import { authOptions } from '@/utils/authOptions'
 import { getServerSession } from 'next-auth'
 
-let id = ''
 export default async function HomePage({ searchParams }) {
 	const session = await getServerSession(authOptions);
 
-	const { metadata, data, userId } = await getAllQuestion(
+	const result = await getAllQuestion(
 		1,
 		5,
 		session?.user.email,
 		searchParams?.sort,
 		searchParams?.search
-	);
+	) || { metadata: { totalCount: 0 }, data: [], userId: null };
 
-	
+	const { metadata, data, userId } = result;
 
-	if (userId) {
-		id = JSON.parse(JSON.stringify(userId));
-	}
+	const id = userId ? JSON.parse(JSON.stringify(userId)) : '';
 
 	return (
 		<>
@@ -40,15 +37,18 @@ export default async function HomePage({ searchParams }) {
 				</div>
 				<div className="mt-10 flex items-center justify-between gap-5">
 					<h3 className="text-tiny md:text-lg">
-						{metadata.totalCount} question
-						{metadata.totalCount <= 1 ? "" : "s"}
+						{metadata?.totalCount || 0} question
+						{(metadata?.totalCount || 0) <= 1 ? "" : "s"}
 					</h3>
 
 					<ul className="flex h-6 items-center space-x-0 md:space-x-3 text-small text-nowrap">
-						<TabsUI />
+						<Suspense fallback={<div className="w-20 h-6 bg-gray-100 animate-pulse rounded" />}>
+							<TabsUI />
+						</Suspense>
 					</ul>
 				</div>
-				{metadata.totalCount !== 0 ? (
+
+				{data && data.length > 0 ? (
 					data.map((question) => (
 						<React.Fragment key={question._id}>
 							<Questions question={question} userId={id} />
@@ -58,9 +58,10 @@ export default async function HomePage({ searchParams }) {
 					<h2 className="mt-10">No Question Result</h2>
 				)}
 
-				<InfiniteScroll />
+				<Suspense fallback={null}>
+					<InfiniteScroll />
+				</Suspense>
 			</div>
 		</>
 	);
 }
-

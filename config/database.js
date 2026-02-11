@@ -3,41 +3,41 @@ import mongoose from "mongoose";
 const MONGODB_URI = process.env.MONGODB_URI;
 const MONGODB_NAME = process.env.MONGODB_DATABASE_NAME;
 
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
 const connectToDatabase = async () => {
-    mongoose.set("strictQuery", true);
+  mongoose.set("strictQuery", true);
 
-    if (!MONGODB_URI) {
-        console.error("Missing MONGODB_URI in environment variables");
-        return;
-    }
+  if (!MONGODB_URI) throw new Error("Missing MONGODB_URI");
 
-    // 1. Check current connection state
-    // 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
-    const state = mongoose.connection.readyState;
+  // If already have a connection, use it
+  if (cached.conn) return cached.conn;
 
-    if (state === 1) {
-        console.log("MongoDB is already connected");
-        return;
-    }
+  // If don't have a connection promise yet, create one
+  if (!cached.promise) {
+    console.log("Creating new MongoDB connection promise...");
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      dbName: MONGODB_NAME,
+      bufferCommands: false,
+    }).then((mongoose) => {
+      console.log("MongoDB Connected Successfully");
+      return mongoose;
+    });
+  }
 
-    if (state === 2) {
-        console.log("MongoDB is currently connecting...");
-        return;
-    }
+  try {
+    // Wait for the promise (whether it was just created or already existed)
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null; // Reset if it fails so can try again
+    throw e;
+  }
 
-    try {
-        await mongoose.connect(MONGODB_URI, {
-            dbName: MONGODB_NAME,
-            // 2. CRITICAL: Disable buffering so it fails fast 
-            // instead of hanging for 10 seconds.
-            bufferCommands: false, 
-        });
-        
-        console.log("MongoDB Connected Successfully");
-    } catch (error) {
-        console.error("MongoDB connection error:", error);
-        throw error; 
-    }
+  return cached.conn;
 };
 
 export default connectToDatabase;

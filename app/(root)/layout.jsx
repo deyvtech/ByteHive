@@ -2,7 +2,7 @@ import "@/assets/styles/globals.css";
 import "@/assets/styles/prism.css"
 import { Providers } from "./providers";
 import AuthProvider from "@/components/AuthProvider";
-
+import { Suspense } from "react";
 import Sidebar from "@/components/Sidebar";
 import Widget from "@/components/Widget";
 import Header from "@/components/Header";
@@ -20,10 +20,14 @@ export default async function RootLayout({ children }) {
 			<html lang="en" className="dark">
 				<body>
 					<Providers>
-						<Header />
+						{/* Wrap Header here */}
+						<Suspense fallback={<div className="h-[104px] w-full bg-darkTheme-100" />}>
+							<Header />
+						</Suspense>
+						
 						<div className="flex gap-4 lg:gap-0">
 							<Sidebar />
-							<main className="w-full md:w-[90%] lg:w-[60%] p-10 ml-0 md:ml-[10%] lg:ml-[20%] mt-[104px] h-[100vh]">
+							<main className="...">
 								{children}
 							</main>
 							<Widget />
